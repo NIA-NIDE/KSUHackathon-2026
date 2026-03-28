@@ -2,17 +2,8 @@ let player;
 let cns;
 let mainMenu = 0;
 
-
-function getViewportSize() {
- const vv = window.visualViewport;
- const viewportWidth = vv?.width ?? window.innerWidth;
- const viewportHeight = vv?.height ?? window.innerHeight;
- return {
-   w: Math.max(1, Math.floor(viewportWidth)),
-   h: Math.max(1, Math.floor(viewportHeight))
- };
-}
-
+const CANVAS_W = 800;
+const CANVAS_H = 600;
 
 function updateViewportVars() {
  const vv = window.visualViewport;
@@ -21,13 +12,11 @@ function updateViewportVars() {
 }
 
 function createOrResizeCanvas() {
- const { w, h } = getViewportSize();
-
  if (!cns) {
-   cns = createCanvas(w, h);
+   cns = createCanvas(CANVAS_W, CANVAS_H);
    cns.parent('sketch-holder');
  } else {
-   resizeCanvas(w, h);
+   resizeCanvas(CANVAS_W, CANVAS_H);
  }
 }
 
@@ -50,13 +39,11 @@ function setup() {
  if (window.visualViewport) {
    window.visualViewport.addEventListener('resize', () => {
      updateViewportVars();
-     createOrResizeCanvas();
    });
    window.visualViewport.addEventListener('scroll', updateViewportVars);
  }
  window.addEventListener('orientationchange', () => {
    updateViewportVars();
-   createOrResizeCanvas();
  });
   player = new Sprite();
  player.w = 100;
@@ -69,7 +56,6 @@ function setup() {
 
 function windowResized() {
  updateViewportVars();
- createOrResizeCanvas();
 }
 
 
