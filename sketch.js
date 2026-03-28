@@ -1,56 +1,59 @@
 let player;
 let cns;
-let mainMenu = 0;
+let startButton;
+let screen = 0;
+let mainGameInitialized = false;
 
 const CANVAS_W = 800;
 const CANVAS_H = 600;
 
-function updateViewportVars() {
+function updateViewportVars() { //updates depending on screen resolutuion and orientation
  const vv = window.visualViewport;
  const viewportHeight = vv?.height ?? window.innerHeight;
- document.documentElement.style.setProperty('--vvh', `${viewportHeight}px`);
+ document.documentElement.style.setProperty('--vvh', `${viewportHeight}px`); 
 }
 
-function createOrResizeCanvas() {
+function createOrResizeCanvas() { //forces canvas to be child of div with id 'sketch-holder'
  if (!cns) {
-   cns = createCanvas(CANVAS_W, CANVAS_H);
-   cns.parent('sketch-holder');
+   cns = createCanvas(CANVAS_W, CANVAS_H); 
+   cns.parent('sketch-holder'); 
  } else {
    resizeCanvas(CANVAS_W, CANVAS_H);
  }
 }
 
-
-function ensureCanvasParent() {
+//For Saftey
+function ensureCanvasParent() { //ensures canvas is child of div with id 'sketch-holder', in case it gets detached for some reason
  if (cns && cns.elt && cns.elt.parentElement?.id !== 'sketch-holder') {
    cns.parent('sketch-holder');
  }
 }
 
-
-function setup() {
- // Create canvas first
- updateViewportVars();
- createOrResizeCanvas();
-
- background(200);
-
-
- if (window.visualViewport) {
+function preload(){
+ if (window.visualViewport) { //only add event listeners if visualViewport API is supported
    window.visualViewport.addEventListener('resize', () => {
      updateViewportVars();
    });
    window.visualViewport.addEventListener('scroll', updateViewportVars);
  }
+ 
  window.addEventListener('orientationchange', () => {
    updateViewportVars();
  });
-  player = new Sprite();
- player.w = 100;
- //Notes
- /*
-   player.image = "your image link/url"
- */
+ 
+}
+
+function setup() {
+ // Create canvas first
+ updateViewportVars();
+ createOrResizeCanvas();
+ background(200); //temporary background color, can be removed when main menu is implemented
+
+ // Create UI once
+ startButton = createButton('Start Game');
+ startButton.mousePressed(startGame);
+ startButton.show();
+
 }
 
 
@@ -61,11 +64,12 @@ function windowResized() {
 
 
 
-function firstRoom(){
-// Draw rectangle at edge
-background("green");
- rect(0, 0, width, height);
+function mainGameRoom(){
+ initMainGameRoom();
 
+// Draw rectangle at edge
+ background("green");
+ rect(0, 0, width, height);
 
  // Move character to follow mouse
  if(keyIsDown('d')){
@@ -80,28 +84,45 @@ background("green");
 
 
 }
+
+function initMainGameRoom() {
+  if (mainGameInitialized) return;
+  player = new Sprite(); ///making player a sprite so we can use built in functions like moveTo and collision detection
+  player.w = 100;
+  player.x = width / 2;
+  player.y = height / 2;
+  mainGameInitialized = true;
+}
 function menuScreen() {
- background(bg); //background image for main menu
- textAlign (CENTER);
- stroke ('black');
- textSize (40);
- text ('Click to start', height/4, width/4);
+ //background(); //background image for main menu
+ if (startButton) {
+   startButton.position(width / 2 - 50, height / 2);
+   startButton.show();
+ }
+ 
+
+}
+
+function startGame() {
+  screen = 1;
+  hideButton();
+  initMainGameRoom();
+}
+
+function hideButton(){
+  if (startButton) 
+  {
+  startButton.hide();
+  }
 }
 
 
-
-
 function draw() {
-//   ensureCanvasParent();
-//   updateViewportVars();
-//   background(255);
- //   stroke('pink');
-//   strokeWeight(5);
-//   noFill();
+
   if(screen == 0){
    menuScreen();
- } else if(screen = 1){
-   firstRoom();
+ } else if(screen == 1){
+   mainGameRoom();
  }
 
 
