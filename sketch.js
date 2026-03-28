@@ -8,10 +8,16 @@ let img;
 let bg;
 let gameBg;
 let playerImg;
+let walkingAnimation;
 let mainGameInitialized = false;
 
 const CANVAS_W = 800;
 const CANVAS_H = 600;
+
+function loadAnimation(){
+   walkingAnimation = loadImage('assets/pixil-gif-drawing.gif');
+}
+
 
 function updateViewportVars() { //updates depending on screen resolutuion and orientation
  const vv = window.visualViewport;
@@ -81,16 +87,13 @@ function mainGameRoom(){
  // Move character to follow mouse
  if(kb.pressing('d')){
     player.vel.x = +5;
-   //player.moveTo(player.x + 50, player.y);
+    
  } else if(kb.pressing('a')){
      player.vel.x = - 5;
-  // player.moveTo(player.x - 20, player.y);
  } else if(kb.pressing('w')){
    player.vel.y = -5;
-   //player.moveTo(player.x, player.y - 20);
  } else if(kb.pressing('s')){
     player.vel.y = +5;
-   player.moveTo(player.x, player.y + 20);
  } else {
   player.vel.x = 0;
   player.vel.y = 0;
@@ -103,10 +106,12 @@ function initMainGameRoom() {
   mainGameInitialized = true;
   world.gravity.y = 0;
   player = new Sprite();
+  // player.addAni('move', 'assets/pixil-gif-drawing.gif');
   player.collider = 'kinematic';
   player.x = width / 2;
   player.y = height / 2;
   player.image = playerImg;
+  img
   player.scale = 3.5;
 }
 
@@ -137,9 +142,9 @@ function hideButton(){
   }
 }
 
-function creditsScreen(){
- Text("hello", 10, 30);
-}
+// function creditsScreen(){
+//  Text("hello", 10, 30);
+// }
 
 function draw() {
 
