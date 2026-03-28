@@ -109,6 +109,7 @@ function draw() {
 //   ensureCanvasParent();
 //   updateViewportVars();
 //   background(255);
+<<<<<<< HEAD
  //   stroke('pink');
 //   strokeWeight(5);
 //   noFill();
@@ -120,3 +121,17 @@ function draw() {
 
 
 }
+=======
+  
+//   stroke('pink');
+//   strokeWeight(5);
+//   noFill();
+  
+  if(screen == 0){
+    menuScreen();
+  } else if(screen = 1){
+    firstRoom();
+  }
+
+}
+>>>>>>> f9cc2a2 (The prototype)
