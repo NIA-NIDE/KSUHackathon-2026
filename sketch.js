@@ -1,6 +1,7 @@
 let player;
 let cns;
 let startButton;
+let creditButton; 
 let screen = 0;
 let mainGameInitialized = false;
 
@@ -47,6 +48,7 @@ function setup() {
  // Create canvas first
  updateViewportVars();
  createOrResizeCanvas();
+ preload();
  background(200); //temporary background color, can be removed when main menu is implemented
 
  // Create UI once
@@ -61,14 +63,11 @@ function windowResized() {
  updateViewportVars();
 }
 
-
-
-
 function mainGameRoom(){
- initMainGameRoom();
+ initMainGameRoom(); //this intializes the player sprite and their mechanisms
 
 // Draw rectangle at edge
- background("green");
+ background('red');
  rect(0, 0, width, height);
 
  // Move character to follow mouse
@@ -98,6 +97,8 @@ function menuScreen() {
  if (startButton) {
    startButton.position(width / 2 - 50, height / 2);
    startButton.show();
+ } else if(creditsScreen){
+  
  }
  
 
@@ -113,9 +114,14 @@ function hideButton(){
   if (startButton) 
   {
   startButton.hide();
+  } else if (creditButton){
+  creditButton.hide();
   }
 }
 
+function creditsScreen(){
+ Text("hello", 10, 30);
+}
 
 function draw() {
 
@@ -123,7 +129,7 @@ function draw() {
    menuScreen();
  } else if(screen == 1){
    mainGameRoom();
- }
+ } else if(screen == 2)
 
 
 }
