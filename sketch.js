@@ -3,6 +3,8 @@ let cns;
 let startButton;
 let creditButton; 
 let screen = 0;
+let img;
+let bg
 let mainGameInitialized = false;
 
 const CANVAS_W = 800;
@@ -50,11 +52,14 @@ function setup() {
  createOrResizeCanvas();
  preload();
  background(200); //temporary background color, can be removed when main menu is implemented
+bg = loadImage('assets/Main-Menu.png');
 
  // Create UI once
  startButton = createButton('Start Game');
  startButton.mousePressed(startGame);
  startButton.show();
+ 
+ 
 
 }
 
@@ -71,26 +76,34 @@ function mainGameRoom(){
  rect(0, 0, width, height);
 
  // Move character to follow mouse
- if(keyIsDown('d')){
-   player.moveTo(player.x + 50, player.y);
+ if(kb.pressing('d')){
+    player.vel.x = +5;
+   //player.moveTo(player.x + 50, player.y);
  } else if(kb.pressing('a')){
-   player.moveTo(player.x - 20, player.y);
+     player.vel.x = - 5;
+  // player.moveTo(player.x - 20, player.y);
  } else if(kb.pressing('w')){
-   player.moveTo(player.x, player.y - 20);
+   player.vel.y = -5;
+   //player.moveTo(player.x, player.y - 20);
  } else if(kb.pressing('s')){
+    player.vel.y = +5;
    player.moveTo(player.x, player.y + 20);
+ } else {
+  player.vel.x = 0;
+  player.vel.y = 0;
  }
 
 
 }
-
 function initMainGameRoom() {
   if (mainGameInitialized) return;
   player = new Sprite(); ///making player a sprite so we can use built in functions like moveTo and collision detection
-  player.w = 100;
   player.x = width / 2;
   player.y = height / 2;
+  player.image = "assets/Cavewomen.png";
+  player.image.scale = 3.5;
   mainGameInitialized = true;
+  
 }
 function menuScreen() {
  //background(); //background image for main menu
@@ -98,7 +111,7 @@ function menuScreen() {
    startButton.position(width / 2 - 50, height / 2);
    startButton.show();
  } else if(creditsScreen){
-  
+  //will do last
  }
  
 
@@ -126,6 +139,7 @@ function creditsScreen(){
 function draw() {
 
   if(screen == 0){
+   background(bg);
    menuScreen();
  } else if(screen == 1){
    mainGameRoom();
