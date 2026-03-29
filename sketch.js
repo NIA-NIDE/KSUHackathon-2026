@@ -1,20 +1,12 @@
+// sketch.js - Fixed for p5play
+
 let player;
-let cns;
-let startButton;
-let creditButton; 
-let mainCharacter;
-let screen = 0;
-let img;
-let bg;
-let gameBg;
-let jungleBg;
-let goalSprite;
 let playerWalk;
-let playerImg_create;
-let walkingAnimation;
+let startButton, creditButton;
+
+let screen = 0; // 0 = menu, 1 = game, 2 = credits
 let mainGameInitialized = false;
 let showPopup = false;
-let labTimer = 0;
 let labStartTime = 0;
 
 const CANVAS_W = 800;
@@ -22,272 +14,227 @@ const CANVAS_H = 600;
 const speed = 4;
 const speedBack = -4;
 
+// Assets
+let startImg, startHoverImg, creditImg;
+let bg, jungleBg, gameBg;
 
-let startImg;
-let startHoverImg;
-let creditImg;
+// ---------------- PRELOAD ----------------
+function preload() {
+  // Load animation safely
+  try {
+    playerWalk = loadAnimation(
+      "assets/Cavewomen001.png",
+      "assets/Cavewomen002.png",
+      "assets/Cavewomen003.png"
+    );
+    playerWalk.frameDelay = 10;
+  } catch (e) {
+    console.warn("Player animation failed. Using placeholder.", e);
+    playerWalk = loadAnimation(
+      "https://picsum.photos/50/50?random=1",
+      "https://picsum.photos/50/50?random=2",
+      "https://picsum.photos/50/50?random=3"
+    );
+  }
 
-function preload(){
- playerWalk = loadAnimation("assets/Cave-women001.png", "assets/Cave-women003.png");
- playerWalk.frameDelay = 10; // Higher value = slower animation
- startImg = loadImage('assets/Start-reg.png');
- startHoverImg = loadImage('assets/Start-hover.png');
- creditImg = loadImage('assets/Credit-button.png');
+  // Load images directly in preload for p5
+  startImg = loadImage("assets/Startreg.png");
+  startHoverImg = loadImage("assets/Starthover.png");
+  creditImg = loadImage("assets/Creditbutton.png");
+
+  bg = loadImage("assets/MainMenu.png");
+  jungleBg = loadImage("assets/Jungle.png");
+  gameBg = loadImage("assets/pixilart-drawing.png");
 }
 
-function preloadSprites(){
- bg = loadImage('assets/Main-Menu.png');
- gameBg = loadImage('assets/pixil-drawing.png');
- jungleBg = loadImage('assets/jungle.png');
-}
-
+// ---------------- SETUP ----------------
 function setup() {
- // Create canvas first
- updateViewportVars();
- createOrResizeCanvas();
- //updateMove();
- preloadSprites();
+  createCanvas(CANVAS_W, CANVAS_H).parent("sketch-holder");
 
- 
- // Create UI once
- startButton = createButton('');
-  keyPressed();
- startButton.elt.style.backgroundImage = "url('assets/Start-reg.png')";
- startButton.elt.style.backgroundSize = "contain";
- startButton.elt.style.backgroundRepeat = "no-repeat";
- startButton.elt.style.backgroundPosition = "center";
- startButton.elt.style.backgroundColor = "transparent";
- startButton.elt.style.border = "none";
- startButton.elt.style.width = "400px";
- startButton.elt.style.height = "200px";
- startButton.elt.style.cursor = "pointer";
- startButton.elt.onmouseover = () => startButton.elt.style.backgroundImage = "url('assets/Start-hover.png')";
- startButton.elt.onmouseout = () => startButton.elt.style.backgroundImage = "url('assets/Start-reg.png')";
-
- creditButton = createButton('');
-  keyPressed();
- creditButton.elt.style.backgroundImage = "url('assets/Credit-button.png')";
- creditButton.elt.style.backgroundSize = "contain";
- creditButton.elt.style.backgroundRepeat = "no-repeat";
- creditButton.elt.style.backgroundPosition = "center";
- creditButton.elt.style.backgroundColor = "transparent";
- creditButton.elt.style.border = "none";
- creditButton.elt.style.width = "400px";
- creditButton.elt.style.height = "200px";
- creditButton.elt.style.cursor = "pointer";
-
- creditButton.show();
- startButton.show();
-} 
-
-function updateAnimation(){
+  setupMenuButtons();
+  window.addEventListener('keydown', handleGlobalKeydown);
 }
 
+// ---------------- MENU BUTTONS ----------------
+function setupMenuButtons() {
+  // Start Button
+  startButton = createButton('');
+  startButton.mousePressed(startGame);
+  styleButton(startButton, "assets/Startreg.png", "assets/Starthover.png");
+  startButton.position(width / 2 - 200, height / 2 - 120);
+  startButton.show();
 
-function updateMove(){
- // Move character to follow mouse
- player.animation.stop();
- if(kb.pressing('d')){
-  player.vel.x = speed;
-  player.animation.play();
-  player.mirror.x = false;
- } else if(kb.pressing('a')){
-     player.vel.x = speedBack; 
-       player.animation.play();
-       player.mirror.x = true;
- } else if(kb.pressing('w')){
-   player.vel.y = speedBack;
-     player.animation.play();
- } else if(kb.pressing('s')){
-    player.vel.y = speed;
-      player.animation.play();
- } else {
-  player.vel.x = 0;
-  player.vel.y = 0;
- }
-
- // Keep character on screen
- if (player.x < 0) player.x = 0;
- if (player.x > width) player.x = width;
- if (player.y < 0) player.y = 0;
- if (player.y > height) player.y = height;
+  // Credit Button
+  creditButton = createButton('');
+  creditButton.mousePressed(creditGame);
+  styleButton(creditButton, "assets/Creditbutton.png", "assets/Creditbutton.png");
+  creditButton.position(width / 2 - 200, height / 2 + 20);
+  creditButton.show();
 }
 
+// Button styling helper
+function styleButton(btn, normalImg, hoverImg) {
+  const getSrc = (img) => {
+    if (!img) return '';
+    if (typeof img === 'string') return img;
+    if (img.elt && img.elt.src) return img.elt.src;
+    if (img.canvas && typeof img.canvas.toDataURL === 'function') return img.canvas.toDataURL();
+    return '';
+  };
 
+  const normalSrc = getSrc(normalImg);
+  const hoverSrc = getSrc(hoverImg);
 
-function mainGameRoom(){
- updateMove();
- push();
- textAlign(LEFT, TOP);
- fill(255);
- stroke(0);
- strokeWeight(3);
- textSize(16);
- text("Press B to enter portal", 20, 20);
- pop();
+  btn.elt.style.backgroundImage = `url('${normalSrc}')`;
+  btn.elt.style.backgroundSize = "contain";
+  btn.elt.style.backgroundRepeat = "no-repeat";
+  btn.elt.style.backgroundPosition = "center";
+  btn.elt.style.backgroundColor = "transparent";
+  btn.elt.style.border = "none";
+  btn.elt.style.width = "400px";
+  btn.elt.style.height = "200px";
+  btn.elt.style.cursor = "pointer";
+  btn.elt.onmouseover = () => btn.elt.style.backgroundImage = `url('${hoverSrc}')`;
+  btn.elt.onmouseout = () => btn.elt.style.backgroundImage = `url('${normalSrc}')`;
 }
 
-
-function initMainGameRoom() { //Player Movement mechanics
+// ---------------- INIT GAME ----------------
+function initMainGameRoom() {
   if (mainGameInitialized) return;
   mainGameInitialized = true;
-  world.gravity.y = 0;
+
   player = new Sprite();
   player.addAnimation("cave", playerWalk);
-  player.collider = 'kinematic';
   player.x = width - 40;
   player.y = height - 40;
   player.scale = 3.5;
 }
 
-function menuScreen() {
- //background(); //background image for main menu
- if (startButton) {
-   startButton.position(width / 2 - 200, height / 2 - 120); // Center start button
-   startButton.show();
- }
- if (creditButton) {
-   creditButton.position(width / 2 - 200, height / 2 - 20);  // Center credit button below
-   creditButton.show();
- }
+// ---------------- DRAW ----------------
+function draw() {
+  background(200);
+
+  // Screens
+  if (screen == 0) {
+    if (bg) image(bg, 0, 0, width, height);
+    menuScreen();
+  } else if (screen == 1) {
+    if (jungleBg) image(jungleBg, 0, 0, width, height);
+    if (player) player.visible = true;
+    mainGameRoom();
+  } else if (screen == 2) {
+    background(100, 150, 255);
+    creditScreen();
+  }
+
+  if (showPopup) drawPopup();
 }
 
+// ---------------- MENU SCREEN ----------------
+function menuScreen() {
+  if (startButton) startButton.show();
+  if (creditButton) creditButton.show();
+}
+
+// ---------------- MAIN GAME ----------------
+function mainGameRoom() {
+  updateMove();
+  push();
+  fill(255);
+  stroke(0);
+  textSize(16);
+  text("Press B to enter portal", 20, 20);
+  pop();
+}
+
+// ---------------- PLAYER MOVEMENT ----------------
+function updateMove() {
+  if (!player) return;
+
+  player.animation.stop();
+  if (kb.pressing('d')) {
+    player.vel.x = speed;
+    player.animation.play();
+    player.mirror.x = false;
+  } else if (kb.pressing('a')) {
+    player.vel.x = speedBack;
+    player.animation.play();
+    player.mirror.x = true;
+  } else if (kb.pressing('w')) {
+    player.vel.y = speedBack;
+    player.animation.play();
+  } else if (kb.pressing('s')) {
+    player.vel.y = speed;
+    player.animation.play();
+  } else {
+    player.vel.x = 0;
+    player.vel.y = 0;
+  }
+
+  // Keep on screen
+  player.x = constrain(player.x, 0, width);
+  player.y = constrain(player.y, 0, height);
+}
+
+// ---------------- SCREENS ----------------
 function startGame() {
   screen = 1;
-  hideButton();
+  hideButtons();
   initMainGameRoom();
 }
 
 function creditGame() {
   screen = 2;
-  hideButton();
-}
-
-function labScreen() {
-  textAlign(CENTER, CENTER);
-  fill(0);
-  textSize(32);
-  text("LABORATORY", width / 2, 50); 
-  
-  // Update and Display Timer
-  let elapsed = floor((millis() - labStartTime) / 1000);
-  let remaining = max(0, 5 - elapsed);
-  
-  let minutes = floor(remaining / 60);
-  let seconds = remaining % 60;
-  let timeStr = nf(minutes, 1) + ":" + nf(seconds, 2);
-  
-  textSize(24);
-  fill(remaining < 10 ? 'red' : 0); // Turn red in last 10 seconds
-  text("Time Remaining: " + timeStr, width / 2, 100);
-  
-  if (remaining <= 0) {
-    screen = 3; // Game over if time runs out
-  }
-
-  fill(0);
-  textSize(16);
-  text("Science in progress...", width / 2, height / 2);
-  text("Press M to return to menu", width / 2, height / 2 + 100);
+  hideButtons();
 }
 
 function creditScreen() {
-  text('CREDITS', width / 2 - 50, 50);
-  text('Game Created By: Myah Nix & Niesha Mccory', width / 2 - 100, 150);
-  text('Music: [Your Music Credits]', width / 2 - 100, 200);
-  text('Art: [Your Art Credits]', width / 2 - 100, 250);
-  text('Press M to return to menu', width / 2 - 120, 500);
+  fill(0);
+  textAlign(CENTER, TOP);
+  textSize(32);
+  text('CREDITS', width / 2, 50);
+  textSize(16);
+  text('Game Created By: Myah Nix & Niesha Mccory', width / 2, 150);
+  text('Music: [Your Music Credits]', width / 2, 200);
+  text('Art: [Your Art Credits]', width / 2, 250);
+  text('Press M to return to menu', width / 2, 500);
 }
 
-function hideButton(){
-  if (startButton) 
-  {
-  startButton.hide();
-  creditButton.hide();
-  } else if (creditButton){
-  creditButton.hide();
-  }
+// ---------------- BUTTON HELPERS ----------------
+function hideButtons() {
+  if (startButton) startButton.hide();
+  if (creditButton) creditButton.hide();
 }
 
-function keyPressed() {
-  if (key === 'e' || key === 'E') {
-    startGame();
-  } else if (key === 'c' || key === 'C') {
-    creditGame();
-  } else if (key === 'm' || key === 'M') {
-    screen = 0;
-    mainGameInitialized = false;
-  } else if (key === 'y' || key === 'Y') {
-    showPopup = !showPopup; // Toggle stationary popup
-  } else if (key === 'b' || key === 'B') {
-    screen = 4; // Lab Screen
-    hideButton();
-    // Start 2 minute timer (120 seconds)
-    labStartTime = millis();
-    labTimer = 120;
-    // Reset player position for the lab screen
-    if (player) {
-      player.x = width - 40;
-      player.y = height - 40;
-    }
-  }
-}
-
-
-function draw() {
-
-  if(screen == 0){
-   background(bg);
-   menuScreen();
- } else if(screen == 1){
-   background(jungleBg);
-   if (player) player.visible = true;
-   mainGameRoom();
- } else if(screen == 2){
-   background(100, 150, 255);
-   creditScreen();
- } else if(screen == 3){
-   background(255, 0, 0); // Red screen
-   if (player) player.visible = false;
-   if (goalSprite) goalSprite.visible = false;
-   textAlign(CENTER, CENTER);
-   fill(255);
-   textSize(32);
-   text("GAME OVER / REACHED GOAL", width / 2, height / 2);
-   textSize(16);
-   text("Press M for Menu", width / 2, height / 2 + 50);
- } else if(screen == 4){
-   background(200); // Light gray lab floor
-   if (player) player.visible = true;
-   labScreen();
-   mainGameRoom(); // Use this function to keep player movement logic active
- }
-
- if (showPopup) {
-   drawPopup();
- }
-
-}
-
+// ---------------- POPUP ----------------
 function drawPopup() {
   push();
   rectMode(CENTER);
-  fill(255, 255, 255, 230); // White with transparency
+  fill(255, 255, 255, 230);
   stroke(0);
-  strokeWeight(2);
-  
-  // Center of the screen
-  let x = width / 2;
-  let y = height / 2;
-  
-  rect(x, y, 300, 150, 10);
-  
-  fill(0);
+  rect(width/2, height/2, 300, 150, 10);
   noStroke();
+  fill(0);
   textAlign(CENTER, CENTER);
   textSize(18);
-  text("Hello! This is a popup", x, y - 20);
+  text("Hello! This is a popup", width/2, height/2 - 20);
   textSize(14);
-  text("Press Y to close", x, y + 30);
+  text("Press Y to close", width/2, height/2 + 30);
   pop();
+}
+
+// ---------------- KEYPRESSES ----------------
+function handleGlobalKeydown(event) {
+  const k = event.key.toLowerCase();
+  if (k === 'e') startGame();
+  if (k === 'c') creditGame();
+  if (k === 'm') screen = 0;
+  if (k === 'y') showPopup = !showPopup;
+}
+
+function keyPressed() {
+  if (key === 'e' || key === 'E') {screen = 1; hideButtons(); initMainGameRoom();}
+  if (key === 'c' || key === 'C') creditGame();
+  if (key === 'm' || key === 'M') screen = 0;
+  if (key === 'y' || key === 'Y') showPopup = !showPopup;
 }
