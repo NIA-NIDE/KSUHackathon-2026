@@ -230,6 +230,11 @@ function creditGame() {
   hideButtons();
 }
 
+function menuScreen() {
+  screen = 0; //
+  if (player) player.visible = false; //
+
+}
 function creditScreen() {
   fill(0);
   textAlign(CENTER, TOP);
@@ -279,6 +284,6 @@ function keyPressed() {
   if (key === 'e' || key === 'E') startGame();
   if( key === 'b' || key === 'B') labGame();
   if (key === 'c' || key === 'C') creditGame();
-  if (key === 'm' || key === 'M') screen = 0;
+  if (key === 'm' || key === 'M') menuScreen();
   if (key === 'y' || key === 'Y') showPopup = !showPopup;
 }
