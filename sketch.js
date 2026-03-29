@@ -3,7 +3,6 @@
 let player;
 let playerWalk;
 let startButton, creditButton;
-let menuButtonWrapper;
 
 let screen = 0; // 0 = menu, 1 = game, 2 = Lab, 3 = credits
 let mainGameInitialized = false;
@@ -70,35 +69,23 @@ function setup() {
 
 // ---------------- MENU BUTTONS ----------------
 function setupMenuButtons() {
-  const btnWidth = 180;
-  const btnHeight = 80;
-  const btnGap = 20;
-
-  menuButtonWrapper = createDiv().parent('sketch-holder');
-  menuButtonWrapper.style('position', 'absolute');
-  menuButtonWrapper.style('left', '50%');
-  menuButtonWrapper.style('top', '50%');
-  menuButtonWrapper.style('transform', 'translate(-50%, -50%)');
-  menuButtonWrapper.style('display', 'flex');
-  menuButtonWrapper.style('gap', `${btnGap}px`);
-  menuButtonWrapper.style('justify-content', 'center');
-  menuButtonWrapper.style('align-items', 'center');
-
   // Start Button
   startButton = createButton('');
-  startButton.parent(menuButtonWrapper);
   startButton.mousePressed(startGame);
-  styleButton(startButton, "assets/Startreg.png", "assets/Starthover.png", btnWidth, btnHeight);
+  styleButton(startButton, "assets/Startreg.png", "assets/Starthover.png");
+  startButton.position(width / 2 - 200, height / 2 - 120);
+  startButton.show();
 
   // Credit Button
   creditButton = createButton('');
-  creditButton.parent(menuButtonWrapper);
   creditButton.mousePressed(creditGame);
-  styleButton(creditButton, "assets/Creditbutton.png", "assets/Creditbutton.png", btnWidth, btnHeight);
+  styleButton(creditButton, "assets/Creditbutton.png", "assets/Creditbutton.png");
+  creditButton.position(width / 2 - 200, height / 2 + 20);
+  creditButton.show();
 }
 
 // Button styling helper
-function styleButton(btn, normalImg, hoverImg, btnWidth = 400, btnHeight = 200) {
+function styleButton(btn, normalImg, hoverImg) {
   const getSrc = (img) => {
     if (!img) return '';
     if (typeof img === 'string') return img;
@@ -168,7 +155,6 @@ function draw() {
 
 // ---------------- MENU SCREEN ----------------
 function menuScreen() {
-  if (menuButtonWrapper) menuButtonWrapper.show();
   if (startButton) startButton.show();
   if (creditButton) creditButton.show();
   //player.visible = false;
@@ -258,7 +244,6 @@ function creditScreen() {
 
 // ---------------- BUTTON HELPERS ----------------
 function hideButtons() {
-  if (menuButtonWrapper) menuButtonWrapper.hide();
   if (startButton) startButton.hide();
   if (creditButton) creditButton.hide();
 }
