@@ -150,7 +150,7 @@ function draw() {
     creditScreen();
   }
   
-  drawSprites();
+  
 }
 
 // ---------------- MENU SCREEN ----------------
