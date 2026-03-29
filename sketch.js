@@ -53,7 +53,7 @@ function setup() {
   createCanvas(CANVAS_W, CANVAS_H).parent("sketch-holder");
 
   setupMenuButtons();
-  window.addEventListener('keydown', handleGlobalKeydown);
+  
 }
 
 // ---------------- MENU BUTTONS ----------------
