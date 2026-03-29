@@ -124,8 +124,9 @@ function draw() {
     player.visible = true;
     mainGameRoom();
   } else if (screen == 2) {
-    background(100, 150, 255);
     image(labBg, 0, 0, width, height);
+    player.visible = true;
+    mainGameRoom();
   }
   else if (screen == 3) {
     creditScreen();
@@ -189,6 +190,7 @@ function startGame() {
 function labGame() {
   screen = 2;
   labStartTime = millis();
+  initMainGameRoom();
 }
 
 function creditGame() {
