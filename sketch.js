@@ -124,7 +124,12 @@ function draw() {
   } else if (screen == 2) {
     player.visible = true;
     image(labBg, 0, 0, width, height);
-
+    //image(BookShelfImg, 150, 150, 100, 100);
+    //image(CrystalImg, 300, 150, 100, 100);
+    //image(PaperImg, 450, 150, 100, 100);
+    //image(CabinetImg, 150, 300, 100, 100);
+    //image(GateImg, 300, 300, 100, 100);
+    //image(ChestImg, 450, 300, 100, 100);
     LabGameRoom();
   }
   else if (screen == 3) {
@@ -263,6 +268,3 @@ function keyPressed() {
   if (key === 'm' || key === 'M') screen = 0;
   if (key === 'y' || key === 'Y') showPopup = !showPopup;
 }
-
-
-
