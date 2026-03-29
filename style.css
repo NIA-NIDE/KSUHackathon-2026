@@ -5,6 +5,7 @@ body {
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
+	font-family: "retro";
 }
 
 #sketch-holder {
@@ -17,4 +18,32 @@ body {
 
 canvas {
 	display: block;
+}
+
+.start-button {
+	background-image: url('assets/Start-reg.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-color: transparent;
+	border: none;
+	width: 400px;
+	height: 200px;
+	cursor: pointer;
+}
+
+.start-button:hover {
+	background-image: url('assets/Start-hover.png');
+}
+
+.credit-button {
+	background-image: url('assets/Credit-button.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-color: transparent;
+	border: none;
+	width: 400px;
+	height: 200px;
+	cursor: pointer;
 }
