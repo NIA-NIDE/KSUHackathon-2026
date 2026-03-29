@@ -189,7 +189,6 @@ function startGame() {
 
 function labGame() {
   screen = 2;
-  labStartTime = millis();
   initMainGameRoom();
 }
 
@@ -234,13 +233,7 @@ function drawPopup() {
 }
 
 // ---------------- KEYPRESSES ----------------
-function handleGlobalKeydown(event) {
-  const k = event.key.toLowerCase();
-  if (k === 'e') startGame();
-  if (k === 'c') creditGame();
-  if (k === 'm') screen = 0;
-  if (k === 'y') showPopup = !showPopup;
-}
+
 
 function keyPressed() {
   if (key === 'e' || key === 'E') startGame();
