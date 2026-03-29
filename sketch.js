@@ -230,7 +230,6 @@ function creditGame() {
   hideButtons();
 }
 
-
 function creditScreen() {
   fill(0);
   textAlign(CENTER, TOP);
