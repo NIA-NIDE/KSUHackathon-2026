@@ -117,20 +117,34 @@ function draw() {
 
   // DON'T TOUCH THIS BRUH
   if (screen == 0) {
+    if (bg) {
       image(bg, 0, 0, width, height);
+    } else {
+      background(50, 100, 150);
+    }
     menuScreen();
   } else if (screen == 1) {
-    image(jungleBg, 0, 0, width, height);
-    player.visible = true;
+    if (jungleBg) {
+      image(jungleBg, 0, 0, width, height);
+    } else {
+      background(75, 125, 50);
+    }
+    if (player) player.visible = true;
     mainGameRoom();
+    drawSprites();
   } else if (screen == 2) {
-    image(labBg, 0, 0, width, height);
-    player.visible = true;
+    if (labBg) {
+      image(labBg, 0, 0, width, height);
+    } else {
+      background(30, 60, 120);
+    }
+    if (player) player.visible = true;
     mainGameRoom();
-  }
-  else if (screen == 3) {
+    drawSprites();
+  } else if (screen == 3) {
     creditScreen();
   }
+
   if (showPopup) drawPopup();
 }
 
