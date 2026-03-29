@@ -156,7 +156,7 @@ function draw() {
 function menuScreen() {
   if (startButton) startButton.show();
   if (creditButton) creditButton.show();
-  player.visible = false;
+  
 }
 
 // ---------------- MAIN GAME ----------------
