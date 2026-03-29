@@ -48,6 +48,11 @@ function preload() {
 // ---------------- SETUP ----------------
 function setup() {
   createCanvas(CANVAS_W, CANVAS_H).parent("sketch-holder");
+const canvas = document.querySelector('canvas');
+canvas.style.position = 'absolute';
+canvas.style.top = '50%';
+canvas.style.left = '50%';
+canvas.style.transform = 'translate(-50%, -50%)';
 
   setupMenuButtons();
   window.addEventListener('keydown', handleGlobalKeydown);
@@ -60,6 +65,7 @@ function setupMenuButtons() {
   startButton.mousePressed(startGame);
   styleButton(startButton, "assets/Startreg.png", "assets/Starthover.png");
   startButton.position(width / 2 - 200, height / 2 - 120);
+  startButton.style('position', 'absolute');
   startButton.show();
 
   // Credit Button
@@ -67,6 +73,8 @@ function setupMenuButtons() {
   creditButton.mousePressed(creditGame);
   styleButton(creditButton, "assets/Creditbutton.png", "assets/Creditbutton.png");
   creditButton.position(width / 2 - 200, height / 2 + 20);
+  creditButton.style('position', 'absolute');
+
   creditButton.show();
 }
 
