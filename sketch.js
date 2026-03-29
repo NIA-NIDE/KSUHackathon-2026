@@ -119,7 +119,7 @@ function draw() {
     if (bg) image(bg, 0, 0, width, height);
     menuScreen();
   } else if (screen == 1) {
-    if (jungleBg) image(jungleBg, 800, 600, width, height);
+    if (jungleBg) image(jungleBg, 0, 0, width, height);
     if (player) player.visible = true;
     mainGameRoom();
   } else if (screen == 2) {
