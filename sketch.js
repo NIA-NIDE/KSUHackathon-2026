@@ -73,14 +73,12 @@ function setupMenuButtons() {
   startButton = createButton('');
   startButton.mousePressed(startGame);
   styleButton(startButton, "assets/Startreg.png", "assets/Starthover.png");
-  startButton.position(width / 2 - 200, height / 2 - 120);
   startButton.show();
 
   // Credit Button
   creditButton = createButton('');
   creditButton.mousePressed(creditGame);
   styleButton(creditButton, "assets/Creditbutton.png", "assets/Creditbutton.png");
-  creditButton.position(width / 2 - 200, height / 2 + 20);
   creditButton.show();
 }
 
