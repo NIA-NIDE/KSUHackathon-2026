@@ -30,6 +30,12 @@ function preload() {
     );
     playerWalk.frameDelay = 10;
   } catch (e) {
+    console.warn("Player animation failed. Using placeholder.", e);
+    playerWalk = loadAnimation(
+      "https://picsum.photos/50/50?random=1",
+      "https://picsum.photos/50/50?random=2",
+      "https://picsum.photos/50/50?random=3"
+    );
   }
 
   // Load images directly in preload for p5
@@ -42,17 +48,20 @@ function preload() {
   gameBg = loadImage("assets/pixilart-drawing.png");
   labBg = loadImage("assets/Research-Lab.png");
 
-  
+  // Load game objects
+  //portalImg = loadImage("assets/Portal.png");
+  //BookShelfImg = loadImage("assets/BookShelf.png");
+  //CrystalImg = loadImage("assets/Crystal-Ball.png");
+  //PaperImg = loadImage("assets/PaperPaper.png");
+  //CabinetImg = loadImage("assets/Closed-Cabinet.png");
+  //GateImg = loadImage("assets/Gate.png");
+  //ChestImg = loadImage("assets/Closed-chest.png");
+
 }
 
 // ---------------- SETUP ----------------
 function setup() {
   createCanvas(CANVAS_W, CANVAS_H).parent("sketch-holder");
-const canvas = document.querySelector('canvas');
-canvas.style.position = 'absolute';
-canvas.style.top = '50%';
-canvas.style.left = '50%';
-canvas.style.transform = 'translate(-50%, -50%)';
 
   setupMenuButtons();
   window.addEventListener('keydown', handleGlobalKeydown);
@@ -65,7 +74,6 @@ function setupMenuButtons() {
   startButton.mousePressed(startGame);
   styleButton(startButton, "assets/Startreg.png", "assets/Starthover.png");
   startButton.position(width / 2 - 200, height / 2 - 120);
-  startButton.style('position', 'absolute');
   startButton.show();
 
   // Credit Button
@@ -73,8 +81,6 @@ function setupMenuButtons() {
   creditButton.mousePressed(creditGame);
   styleButton(creditButton, "assets/Creditbutton.png", "assets/Creditbutton.png");
   creditButton.position(width / 2 - 200, height / 2 + 20);
-  creditButton.style('position', 'absolute');
-
   creditButton.show();
 }
 
@@ -276,3 +282,6 @@ function keyPressed() {
   if (key === 'm' || key === 'M') screen = 0;
   if (key === 'y' || key === 'Y') showPopup = !showPopup;
 }
+
+
+

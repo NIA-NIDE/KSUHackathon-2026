@@ -1,24 +1,26 @@
-<!DOCTYPE html>
-
+<!-- index.html -->
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
-  <title>Cavewoman Adventure - p5play Game</title>
-  
+  <title>p5play Game</title>
 </head>
 <body>
   <main id="sketch-holder"></main>
 
-  <!-- Load p5.js first -->
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
   
-  <!-- Load p5play (CORRECT library for your code) -->
-  <script src="https://cdn.jsdelivr.net/npm/p5play@3.11.0/p5play.min.js"></script>
+ 
+  <!-- p5.js first -->
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/addons/p5.sound.min.js"></script>
+
+  <!-- Then p5.play -->
+  <script src="https://rawcdn.githack.com/molleindustria/p5.play/v1.5.0/lib/p5.play.js"></script>
 
   <!-- Your scripts -->
-   <script src="screenResolution.js"></script>
+  <script src="screenResolution.js"></script>
   <script src="sketch.js"></script>
 </body>
 </html>
