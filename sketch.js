@@ -72,20 +72,20 @@ function setupMenuButtons() {
   // Start Button
   startButton = createButton('');
   startButton.mousePressed(startGame);
-  styleButton(startButton, "assets/Startreg.png", "assets/Starthover.png");
-  startButton.position(width / 2 - 200, height / 2 - 120);
+  styleButton(startButton, "assets/Startreg.png", "assets/Starthover.png", 180, 80);
+  startButton.position(width / 2 - 190, height / 2 - 60);
   startButton.show();
 
   // Credit Button
   creditButton = createButton('');
   creditButton.mousePressed(creditGame);
-  styleButton(creditButton, "assets/Creditbutton.png", "assets/Creditbutton.png");
-  creditButton.position(width / 2 - 200, height / 2 + 20);
+  styleButton(creditButton, "assets/Creditbutton.png", "assets/Creditbutton.png", 180, 80);
+  creditButton.position(width / 2 + 10, height / 2 - 60);
   creditButton.show();
 }
 
 // Button styling helper
-function styleButton(btn, normalImg, hoverImg) {
+function styleButton(btn, normalImg, hoverImg, btnWidth = 400, btnHeight = 200) {
   const getSrc = (img) => {
     if (!img) return '';
     if (typeof img === 'string') return img;
@@ -103,8 +103,8 @@ function styleButton(btn, normalImg, hoverImg) {
   btn.elt.style.backgroundPosition = "center";
   btn.elt.style.backgroundColor = "transparent";
   btn.elt.style.border = "none";
-  btn.elt.style.width = "400px";
-  btn.elt.style.height = "200px";
+  btn.elt.style.width = `${btnWidth}px`;
+  btn.elt.style.height = `${btnHeight}px`;
   btn.elt.style.cursor = "pointer";
   btn.elt.onmouseover = () => btn.elt.style.backgroundImage = `url('${hoverSrc}')`;
   btn.elt.onmouseout = () => btn.elt.style.backgroundImage = `url('${normalSrc}')`;
