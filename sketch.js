@@ -200,7 +200,7 @@ function startGame() {
 function labGame() {
   screen = 2;
   labStartTime = millis();
-  initMainGameRoom();
+
 }
 
 function creditGame() {
@@ -255,7 +255,7 @@ function handleGlobalKeydown(event) {
 
 function keyPressed() {
   if (key === 'e' || key === 'E') startGame();
-  if(key === 'b' || key === 'B')  labGame();
+  if( key === 'b' || key === 'B') labGame();
   if (key === 'c' || key === 'C') creditGame();
   if (key === 'm' || key === 'M') screen = 0;
   if (key === 'y' || key === 'Y') showPopup = !showPopup;
