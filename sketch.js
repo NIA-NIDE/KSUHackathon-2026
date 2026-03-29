@@ -30,12 +30,6 @@ function preload() {
     );
     playerWalk.frameDelay = 10;
   } catch (e) {
-    console.warn("Player animation failed. Using placeholder.", e);
-    playerWalk = loadAnimation(
-      "https://picsum.photos/50/50?random=1",
-      "https://picsum.photos/50/50?random=2",
-      "https://picsum.photos/50/50?random=3"
-    );
   }
 
   // Load images directly in preload for p5
@@ -48,15 +42,7 @@ function preload() {
   gameBg = loadImage("assets/pixilart-drawing.png");
   labBg = loadImage("assets/Research-Lab.png");
 
-  // Load game objects
-  //portalImg = loadImage("assets/Portal.png");
-  //BookShelfImg = loadImage("assets/BookShelf.png");
-  //CrystalImg = loadImage("assets/Crystal-Ball.png");
-  //PaperImg = loadImage("assets/PaperPaper.png");
-  //CabinetImg = loadImage("assets/Closed-Cabinet.png");
-  //GateImg = loadImage("assets/Gate.png");
-  //ChestImg = loadImage("assets/Closed-chest.png");
-
+  
 }
 
 // ---------------- SETUP ----------------
