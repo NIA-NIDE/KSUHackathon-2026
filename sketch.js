@@ -128,7 +128,7 @@ function mainGameRoom(){
 }
 
 
-function initMainGameRoom() {
+function initMainGameRoom() { //Player Movement mechanics
   if (mainGameInitialized) return;
   mainGameInitialized = true;
   world.gravity.y = 0;
@@ -167,7 +167,7 @@ function labScreen() {
   textAlign(CENTER, CENTER);
   fill(0);
   textSize(32);
-  text("LABORATORY", width / 2, 50);
+  text("LABORATORY", width / 2, 50); 
   
   // Update and Display Timer
   let elapsed = floor((millis() - labStartTime) / 1000);
