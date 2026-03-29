@@ -17,7 +17,7 @@ const speedBack = -4;
 // Assets
 let startImg, startHoverImg, creditImg;
 let bg, jungleBg, gameBg, labBg; //added research lab background>
-let portalImg, BookShelfImg, CrystalImg, PaperImg, CabinetImg, GateImg, ChestImg;
+//let portalImg, BookShelfImg, CrystalImg, PaperImg, CabinetImg, GateImg, ChestImg;
 
 // ---------------- PRELOAD ----------------
 function preload() {
@@ -177,7 +177,6 @@ function LabGameRoom() {
   fill(255);
   stroke(0);
   textSize(16);
-
   pop();;
 }
 
