@@ -120,7 +120,7 @@ function draw() {
   // DON'T TOUCH THIS BRUH
   if (screen == 0) {
       image(bg, 0, 0, width, height);
-    menuScreen();
+      menuScreen();
   } else if (screen == 1) {
     image(jungleBg, 0, 0, width, height);
     player.visible = true;
@@ -199,7 +199,7 @@ function updateMove() {
 function startGame() {
   screen = 1;
   hideButtons();
-  initMainGameRoom();
+  
 }
 
 function labGame() {
