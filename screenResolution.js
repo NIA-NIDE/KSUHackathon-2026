@@ -22,7 +22,7 @@ function ensureCanvasParent() { //ensures canvas is child of div with id 'sketch
  }
 }
 
-function preload(){
+function setupViewportListeners(){
  if (window.visualViewport) { //only add event listeners if visualViewport API is supported
    window.visualViewport.addEventListener('resize', () => {
      updateViewportVars();
