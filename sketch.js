@@ -69,30 +69,23 @@ function setup() {
 
 // ---------------- MENU BUTTONS ----------------
 function setupMenuButtons() {
-  const btnWidth = 180;
-  const btnHeight = 80;
-  const btnGap = 20;
-  const startX = width / 2 - btnWidth - btnGap / 2;
-  const creditX = width / 2 + btnGap / 2;
-  const centerY = height / 2 - btnHeight / 2;
-
   // Start Button
   startButton = createButton('');
   startButton.mousePressed(startGame);
-  styleButton(startButton, "assets/Startreg.png", "assets/Starthover.png", btnWidth, btnHeight);
-  startButton.position(startX, centerY);
+  styleButton(startButton, "assets/Startreg.png", "assets/Starthover.png");
+  startButton.position(width / 2 - 200, height / 2 - 120);
   startButton.show();
 
   // Credit Button
   creditButton = createButton('');
   creditButton.mousePressed(creditGame);
-  styleButton(creditButton, "assets/Creditbutton.png", "assets/Creditbutton.png", btnWidth, btnHeight);
-  creditButton.position(creditX, centerY);
+  styleButton(creditButton, "assets/Creditbutton.png", "assets/Creditbutton.png");
+  creditButton.position(width / 2 - 200, height / 2 + 20);
   creditButton.show();
 }
 
 // Button styling helper
-function styleButton(btn, normalImg, hoverImg, btnWidth = 400, btnHeight = 200) {
+function styleButton(btn, normalImg, hoverImg) {
   const getSrc = (img) => {
     if (!img) return '';
     if (typeof img === 'string') return img;
@@ -110,8 +103,8 @@ function styleButton(btn, normalImg, hoverImg, btnWidth = 400, btnHeight = 200) 
   btn.elt.style.backgroundPosition = "center";
   btn.elt.style.backgroundColor = "transparent";
   btn.elt.style.border = "none";
-  btn.elt.style.width = `${btnWidth}px`;
-  btn.elt.style.height = `${btnHeight}px`;
+  btn.elt.style.width = "400px";
+  btn.elt.style.height = "200px";
   btn.elt.style.cursor = "pointer";
   btn.elt.onmouseover = () => btn.elt.style.backgroundImage = `url('${hoverSrc}')`;
   btn.elt.onmouseout = () => btn.elt.style.backgroundImage = `url('${normalSrc}')`;
@@ -237,11 +230,7 @@ function creditGame() {
   hideButtons();
 }
 
-function menuScreen() {
-  screen = 0; //
-  if (player) player.visible = false; //
 
-}
 function creditScreen() {
   fill(0);
   textAlign(CENTER, TOP);
@@ -291,6 +280,6 @@ function keyPressed() {
   if (key === 'e' || key === 'E') startGame();
   if( key === 'b' || key === 'B') labGame();
   if (key === 'c' || key === 'C') creditGame();
-  if (key === 'm' || key === 'M') menuScreen();
+  if (key === 'm' || key === 'M') screen = 0;
   if (key === 'y' || key === 'Y') showPopup = !showPopup;
 }
