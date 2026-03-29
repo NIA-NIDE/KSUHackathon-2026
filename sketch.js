@@ -116,11 +116,11 @@ function draw() {
 
   // Screens
   if (screen == 0) {
-    if (bg) image(bg, 0, 0, width, height);
+      image(bg, 0, 0, width, height);
     menuScreen();
   } else if (screen == 1) {
-    if (jungleBg) image(jungleBg, 0, 0, width, height);
-    if (player) player.visible = true;
+    image(jungleBg, 0, 0, width, height);
+    player.visible = true;
     mainGameRoom();
   } else if (screen == 2) {
     background(100, 150, 255);
