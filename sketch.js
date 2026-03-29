@@ -220,8 +220,7 @@ function startGame() {
 function labGame() {
   screen = 2;
   labStartTime = millis();
-  initMainGameRoom(); // Ensure player is initialized for lab as well
-
+  
 }
 
 function creditGame() {
