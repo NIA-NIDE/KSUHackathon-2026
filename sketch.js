@@ -16,7 +16,8 @@ const speedBack = -4;
 
 // Assets
 let startImg, startHoverImg, creditImg;
-let bg, jungleBg, gameBg, labBg; //added research lab background
+let bg, jungleBg, gameBg, labBg; //added research lab background>
+let portalImg, BookShelfImg, CrystalImg, PaperImg, CabinetImg, GateImg, ChestImg;
 
 // ---------------- PRELOAD ----------------
 function preload() {
@@ -46,6 +47,16 @@ function preload() {
   jungleBg = loadImage("assets/Jungle.png");
   gameBg = loadImage("assets/pixilart-drawing.png");
   labBg = loadImage("assets/Research-Lab.png");
+
+  // Load game objects
+  portalImg = loadImage("assets/Portal.png");
+  BookShelfImg = loadImage("assets/BookShelf.png");
+  CrystalImg = loadImage("assets/Crystal-Ball.png");
+  PaperImg = loadImage("assets/PaperPaper.png");
+  CabinetImg = loadImage("assets/Cabinet.png");
+  GateImg = loadImage("assets/Gate.png");
+  ChestImg = loadImage("assets/Closed-chest.png");
+
 }
 
 // ---------------- SETUP ----------------
@@ -138,6 +149,7 @@ function draw() {
 function menuScreen() {
   if (startButton) startButton.show();
   if (creditButton) creditButton.show();
+  player.visible = false;
 }
 
 // ---------------- MAIN GAME ----------------
@@ -151,6 +163,7 @@ function mainGameRoom() {
   pop();
 }
 
+//----------------- LAB GAME ----------------
 function LabGameRoom() {
   updateMove();
   push();
