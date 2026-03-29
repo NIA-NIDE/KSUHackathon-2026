@@ -53,7 +53,7 @@ function setup() {
   createCanvas(CANVAS_W, CANVAS_H).parent("sketch-holder");
 
   setupMenuButtons();
-  
+  window.addEventListener('keydown', handleGlobalKeydown);
 }
 
 // ---------------- MENU BUTTONS ----------------
@@ -117,34 +117,20 @@ function draw() {
 
   // DON'T TOUCH THIS BRUH
   if (screen == 0) {
-    if (bg) {
       image(bg, 0, 0, width, height);
-    } else {
-      background(50, 100, 150);
-    }
     menuScreen();
   } else if (screen == 1) {
-    if (jungleBg) {
-      image(jungleBg, 0, 0, width, height);
-    } else {
-      background(75, 125, 50);
-    }
-    if (player) player.visible = true;
+    image(jungleBg, 0, 0, width, height);
+    player.visible = true;
     mainGameRoom();
-    drawSprites();
   } else if (screen == 2) {
-    if (labBg) {
-      image(labBg, 0, 0, width, height);
-    } else {
-      background(30, 60, 120);
-    }
-    if (player) player.visible = true;
-    mainGameRoom();
-    drawSprites();
-  } else if (screen == 3) {
+    player.visible = true;
+    image(labBg, 0, 0, width, height);
+    LabGameRoom();
+  }
+  else if (screen == 3) {
     creditScreen();
   }
-
   if (showPopup) drawPopup();
 }
 
@@ -163,6 +149,16 @@ function mainGameRoom() {
   textSize(16);
   text("Press B to enter portal", 20, 20);
   pop();
+}
+
+function LabGameRoom() {
+  updateMove();
+  push();
+  fill(255);
+  stroke(0);
+  textSize(16);
+
+  pop();;
 }
 
 // ---------------- PLAYER MOVEMENT ----------------
@@ -203,6 +199,7 @@ function startGame() {
 
 function labGame() {
   screen = 2;
+  labStartTime = millis();
   initMainGameRoom();
 }
 
@@ -247,7 +244,13 @@ function drawPopup() {
 }
 
 // ---------------- KEYPRESSES ----------------
-
+function handleGlobalKeydown(event) {
+  const k = event.key.toLowerCase();
+  if (k === 'e') startGame();
+  if (k === 'c') creditGame();
+  if (k === 'm') screen = 0;
+  if (k === 'y') showPopup = !showPopup;
+}
 
 function keyPressed() {
   if (key === 'e' || key === 'E') startGame();
