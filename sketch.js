@@ -132,7 +132,7 @@ function draw() {
     menuScreen();
   } else if (screen == 1) {
     image(jungleBg, 0, 0, width, height);
-    image(portalImg, 100, 100, 100, 100);
+    //image(portalImg, 100, 100, 100, 100);
     player.visible = true;
     mainGameRoom();
   } else if (screen == 2) {
@@ -157,7 +157,7 @@ function draw() {
 function menuScreen() {
   if (startButton) startButton.show();
   if (creditButton) creditButton.show();
-  player.visible = false;
+  //player.visible = false;
   
 }
 
