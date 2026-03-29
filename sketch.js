@@ -247,6 +247,7 @@ function drawPopup() {
 function handleGlobalKeydown(event) {
   const k = event.key.toLowerCase();
   if (k === 'e') startGame();
+  if (k === 'b') labGame();
   if (k === 'c') creditGame();
   if (k === 'm') screen = 0;
   if (k === 'y') showPopup = !showPopup;
