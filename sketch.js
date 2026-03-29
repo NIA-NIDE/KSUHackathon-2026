@@ -69,18 +69,25 @@ function setup() {
 
 // ---------------- MENU BUTTONS ----------------
 function setupMenuButtons() {
+  const btnWidth = 180;
+  const btnHeight = 80;
+  const btnGap = 20;
+  const startX = width / 2 - btnWidth - btnGap / 2;
+  const creditX = width / 2 + btnGap / 2;
+  const centerY = height / 2 - btnHeight / 2;
+
   // Start Button
   startButton = createButton('');
   startButton.mousePressed(startGame);
-  styleButton(startButton, "assets/Startreg.png", "assets/Starthover.png", 180, 80);
-  startButton.position(width / 2 - 190, height / 2 - 60);
+  styleButton(startButton, "assets/Startreg.png", "assets/Starthover.png", btnWidth, btnHeight);
+  startButton.position(startX, centerY);
   startButton.show();
 
   // Credit Button
   creditButton = createButton('');
   creditButton.mousePressed(creditGame);
-  styleButton(creditButton, "assets/Creditbutton.png", "assets/Creditbutton.png", 180, 80);
-  creditButton.position(width / 2 + 10, height / 2 - 60);
+  styleButton(creditButton, "assets/Creditbutton.png", "assets/Creditbutton.png", btnWidth, btnHeight);
+  creditButton.position(creditX, centerY);
   creditButton.show();
 }
 
