@@ -131,7 +131,7 @@ function draw() {
   else if (screen == 3) {
     creditScreen();
   }
-  if (showPopup) drawPopup();
+  
 }
 
 // ---------------- MENU SCREEN ----------------
