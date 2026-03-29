@@ -16,8 +16,7 @@ const speedBack = -4;
 
 // Assets
 let startImg, startHoverImg, creditImg;
-let bg, jungleBg, gameBg, labBg; //added research lab background>
-//let portalImg, BookShelfImg, CrystalImg, PaperImg, CabinetImg, GateImg, ChestImg;
+let bg, jungleBg, gameBg, labBg; 
 
 // ---------------- PRELOAD ----------------
 function preload() {
@@ -30,6 +29,12 @@ function preload() {
     );
     playerWalk.frameDelay = 10;
   } catch (e) {
+    console.warn("Player animation failed. Using placeholder.", e);
+    playerWalk = loadAnimation(
+      "https://picsum.photos/50/50?random=1",
+      "https://picsum.photos/50/50?random=2",
+      "https://picsum.photos/50/50?random=3"
+    );
   }
 
   // Load images directly in preload for p5
@@ -118,18 +123,11 @@ function draw() {
     menuScreen();
   } else if (screen == 1) {
     image(jungleBg, 0, 0, width, height);
-    //image(portalImg, 100, 100, 100, 100);
     player.visible = true;
     mainGameRoom();
   } else if (screen == 2) {
     player.visible = true;
     image(labBg, 0, 0, width, height);
-    //image(BookShelfImg, 150, 150, 100, 100);
-    //image(CrystalImg, 300, 150, 100, 100);
-    //image(PaperImg, 450, 150, 100, 100);
-    //image(CabinetImg, 150, 300, 100, 100);
-    //image(GateImg, 300, 300, 100, 100);
-    //image(ChestImg, 450, 300, 100, 100);
     LabGameRoom();
   }
   else if (screen == 3) {
@@ -143,7 +141,7 @@ function draw() {
 function menuScreen() {
   if (startButton) startButton.show();
   if (creditButton) creditButton.show();
-  //player.visible = false;
+
   
 }
 
@@ -207,7 +205,7 @@ function startGame() {
 function labGame() {
   screen = 2;
   labStartTime = millis();
-  initMainGameRoom(); // Ensure player is initialized for lab as well
+ 
   
 }
 
