@@ -48,15 +48,7 @@ function preload() {
   gameBg = loadImage("assets/pixilart-drawing.png");
   labBg = loadImage("assets/Research-Lab.png");
 
-  // Load game objects
-  //portalImg = loadImage("assets/Portal.png");
-  //BookShelfImg = loadImage("assets/BookShelf.png");
-  //CrystalImg = loadImage("assets/Crystal-Ball.png");
-  //PaperImg = loadImage("assets/PaperPaper.png");
-  //CabinetImg = loadImage("assets/Closed-Cabinet.png");
-  //GateImg = loadImage("assets/Gate.png");
-  //ChestImg = loadImage("assets/Closed-chest.png");
-
+  
 }
 
 // ---------------- SETUP ----------------
