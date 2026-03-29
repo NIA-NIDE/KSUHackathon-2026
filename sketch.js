@@ -30,7 +30,12 @@ function preload() {
     );
     playerWalk.frameDelay = 10;
   } catch (e) {
-   
+    console.warn("Player animation failed. Using placeholder.", e);
+    playerWalk = loadAnimation(
+      "https://picsum.photos/50/50?random=1",
+      "https://picsum.photos/50/50?random=2",
+      "https://picsum.photos/50/50?random=3"
+    );
   }
 
   // Load images directly in preload for p5
@@ -277,3 +282,6 @@ function keyPressed() {
   if (key === 'm' || key === 'M') screen = 0;
   if (key === 'y' || key === 'Y') showPopup = !showPopup;
 }
+
+
+
