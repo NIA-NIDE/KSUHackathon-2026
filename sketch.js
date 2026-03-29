@@ -4,7 +4,7 @@ let player;
 let playerWalk;
 let startButton, creditButton;
 
-let screen = 0; // 0 = menu, 1 = game, 2 = credits
+let screen = 0; // 0 = menu, 1 = game, 2 = Lab, 3 = credits
 let mainGameInitialized = false;
 let showPopup = false;
 let labStartTime = 0;
@@ -16,7 +16,7 @@ const speedBack = -4;
 
 // Assets
 let startImg, startHoverImg, creditImg;
-let bg, jungleBg, gameBg;
+let bg, jungleBg, gameBg, labBg; //added research lab background
 
 // ---------------- PRELOAD ----------------
 function preload() {
@@ -45,6 +45,7 @@ function preload() {
   bg = loadImage("assets/MainMenu.png");
   jungleBg = loadImage("assets/Jungle.png");
   gameBg = loadImage("assets/pixilart-drawing.png");
+  labBg = loadImage("assets/Research-Lab.png");
 }
 
 // ---------------- SETUP ----------------
@@ -114,7 +115,7 @@ function initMainGameRoom() {
 function draw() {
   background(200);
 
-  // Screens
+  // DON'T TOUCH THIS BRUH
   if (screen == 0) {
       image(bg, 0, 0, width, height);
     menuScreen();
@@ -124,9 +125,11 @@ function draw() {
     mainGameRoom();
   } else if (screen == 2) {
     background(100, 150, 255);
+    image(labBg, 0, 0, width, height);
+  }
+  else if (screen == 3) {
     creditScreen();
   }
-
   if (showPopup) drawPopup();
 }
 
@@ -183,8 +186,13 @@ function startGame() {
   initMainGameRoom();
 }
 
-function creditGame() {
+function labGame() {
   screen = 2;
+  labStartTime = millis();
+}
+
+function creditGame() {
+  screen = 3;
   hideButtons();
 }
 
@@ -234,6 +242,7 @@ function handleGlobalKeydown(event) {
 
 function keyPressed() {
   if (key === 'e' || key === 'E') startGame();
+  if(key === 'b' || key === 'B')  labGame();
   if (key === 'c' || key === 'C') creditGame();
   if (key === 'm' || key === 'M') screen = 0;
   if (key === 'y' || key === 'Y') showPopup = !showPopup;
